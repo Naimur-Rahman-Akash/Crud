@@ -3,17 +3,24 @@ namespace Bitm;
 use PDO;
 
 class Product{
-public function index(){
-    session_start();
-//Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
+    public $id =null;
+    public $conn =null;
+    public function __construct()
+    {
+        session_start();
+        $this->conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
 // set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+public function index(){
+    
+//Connect to database
+
 
 
 $query = "SELECT * FROM `product` WHERE is_deleted=0" ;
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 
 $result = $stmt->execute();
 
@@ -31,13 +38,11 @@ public function show(){
     
     
     //Connect to database
-    $conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     
     $query = "SELECT * FROM `product` WHERE id = :id";
     
-    $stmt = $conn->prepare($query);
+    $stmt = $this->conn->prepare($query);
     
     $stmt->bindParam(':id', $_id);
     
@@ -49,26 +54,9 @@ public function show(){
 }
 
 public function Store(){
-    session_start();
+    
     //echo $_SERVER['DOCUMTENT_ROOT'].'/crud/';
-    $approot = $_SERVER['DOCUMENT_ROOT'].'/crud/';
-    
-    /*echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";*/
-    //working with image
-    $filename ='IMG_'.time().'-'.$_FILES['picture']['name'];
-    $target = $_FILES['picture']['tmp_name'];
-    $destination = $approot."uploads/".$filename;
-    $is_file_moved = move_uploaded_file($target, $destination);
-    if($is_file_moved){
-    $_picture = $filename;
-        
-    
-    }else {
-    $_picture = null;
-       
-    }
+   $_picture= $this->Upload();
     
     $_title = $_POST['title'];
     $_des = $_POST['description'];
@@ -99,13 +87,11 @@ public function Store(){
     echo "</pre>";
     die ();*/
     //Connect to database
-    $conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   
     
     $query = "INSERT INTO `product` (`title`,`description`,`created_at`,`is_deleted`,`picture`,`product_type`,`is_active`) VALUES (:title,:description, :created_at,:is_deleted,:picture,:product_type,:is_active);";
     
-    $stmt = $conn->prepare($query);
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':title', $_title);
     $stmt->bindParam(':description', $_des);
     $stmt->bindParam(':picture', $_picture);
@@ -127,30 +113,16 @@ public function Store(){
 }
 public function Update(){
 
-    session_start();
+    
 //echo $_SERVER['DOCUMTENT_ROOT'].'/crud/';
-$approot = $_SERVER['DOCUMENT_ROOT'].'/crud/';
+
 
 /*echo "<pre>";
 print_r($_POST);
 echo "</pre>";*/
 //working with image
-if($_FILES['picture']['name']!=""){
-    $filename ='IMG_'.time().'-'.$_FILES['picture']['name'];
-    $target = $_FILES['picture']['tmp_name'];
-    $destination = $approot."uploads/".$filename;
-    $is_file_moved = move_uploaded_file($target, $destination);
-    if($is_file_moved){
-        $_picture = $filename;
+$_picture = $this->Upload();
 
-
-    }else {
-        $_picture = null;
-
-    }
-}else{
-    $_picture= $_POST['old_picture'];
-}
 
 
 $_id = $_POST['id'];
@@ -174,13 +146,11 @@ else{
 $_modified_at = date('Y-m-d h:i:s', time());
 
 //Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-// set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 $query = "UPDATE `product` SET `title` = :title,`description`= :description,`modified_at`=:modified_at,`is_deleted`=:is_deleted,`picture` = :picture,`product_type`=:product_type,`is_active` = :is_active WHERE `product`.`id` = :id;";
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 $stmt->bindParam(':id', $_id);
 $stmt->bindParam(':title', $_title);
 $stmt->bindParam(':description', $_des);
@@ -205,13 +175,11 @@ public function Edit(){
 
 
 //Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-// set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 $query = "SELECT * FROM `product` WHERE id = :id";
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 
 $stmt->bindParam(':id', $_id);
 
@@ -221,16 +189,14 @@ $product = $stmt->fetch();
 return $product;
 }
 public function Trash_index(){
-    session_start();
+    
     //Connect to database
-    $conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
     
     
     $query = "SELECT * FROM `product` WHERE is_deleted=1" ;
     
-    $stmt = $conn->prepare($query);
+    $stmt = $this->conn->prepare($query);
     
     $result = $stmt->execute();
     
@@ -238,19 +204,17 @@ public function Trash_index(){
     return $products;
 }
 public function Trash(){
-    session_start();
+    
 $_id = $_GET['id'];
 $_is_deleted =1;
 
 
 //Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-// set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+;
 
 $query = "UPDATE `product` SET `is_deleted`=:is_deleted WHERE `product`.`id` = :id;";
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 
 $stmt->bindParam(':id', $_id);
 $stmt->bindParam(':is_deleted', $_is_deleted);
@@ -264,18 +228,16 @@ if ($result){
 header("location:index.php");
 }
     public function Delete(){
-        session_start();
+        
 $_id = $_GET['id'];
 
 
 //Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-// set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 $query = "DELETE FROM `product` WHERE `product`.`id` = :id";
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 
 $stmt->bindParam(':id', $_id);
 
@@ -290,19 +252,17 @@ header("location:index.php");
     }
     public function Restore(){
 
-        session_start();
+        
 $_id = $_GET['id'];
 $_is_deleted =0;
 
 
 //Connect to database
-$conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
-// set the PDO error mode to exception
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 $query = "UPDATE `product` SET `is_deleted`=:is_deleted WHERE `product`.`id` = :id;";
 
-$stmt = $conn->prepare($query);
+$stmt = $this->conn->prepare($query);
 
 $stmt->bindParam(':id', $_id);
 $stmt->bindParam(':is_deleted', $_is_deleted);
@@ -315,4 +275,32 @@ if ($result){
 //var_dump($result);
 header("location:index.php");
     }
+private function Upload(){
+    $approot = $_SERVER['DOCUMENT_ROOT'].'/crud/';
+    
+    /*echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";*/
+    //working with image
+    $_picture = null;
+    if($_FILES['picture']['name']!=""){
+        $filename ='IMG_'.time().'-'.$_FILES['picture']['name'];
+        $target = $_FILES['picture']['tmp_name'];
+        $destination = $approot."uploads/".$filename;
+        $is_file_moved = move_uploaded_file($target, $destination);
+        if($is_file_moved){
+            $_picture = $filename;
+    
+    
+        }else {
+            if ($_POST['old_picture']){
+                $_picture = $_POST['old_picture'];
+            
+    
+        }
+    }
+ return $_picture;
+  
+}
+}
 }

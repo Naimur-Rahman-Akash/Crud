@@ -1,6 +1,5 @@
 <?php
-$webroot ="http://localhost/crud/";
-$approot = $_SERVER['DOCUMENT_ROOT']. "/crud/";
+include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
 include_once ($approot. "vendor/autoload.php");
 
 use Bitm\Product;
