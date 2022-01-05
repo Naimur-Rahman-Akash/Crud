@@ -3,9 +3,9 @@ include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
 include_once ($approot. "vendor/autoload.php");
 
 use Bitm\Product;
-
+$id = $_GET['id'];
 $_show = new Product();
-$product = $_show->Show();
+$product = $_show->Show($id);
 
 
 ?>

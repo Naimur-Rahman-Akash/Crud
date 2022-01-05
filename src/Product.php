@@ -7,7 +7,7 @@ class Product{
     public $conn =null;
     public function __construct()
     {
-        session_start();
+       
         $this->conn = new PDO("mysql:host=localhost;dbname=ecommerce", 'root', '');
 // set the PDO error mode to exception
 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -28,10 +28,10 @@ $products = $stmt->fetchAll();
 return $products;
 
 }
-public function show(){
+public function show($id){
 
     
-    $_id = $_GET['id'];
+   
     //var_dump($_GET);
     
     
@@ -44,13 +44,26 @@ public function show(){
     
     $stmt = $this->conn->prepare($query);
     
-    $stmt->bindParam(':id', $_id);
+    $stmt->bindParam(':id', $id);
     
     $result = $stmt->execute();
     
     $product = $stmt->fetch();
     return $product;
     //echo "<pre>";
+}
+public function getActiveProduct(){
+$_startFrom = 0;
+$_total = 4;
+$query = "SELECT * FROM `Product` WHERE is_active = 1 LIMIT $_startFrom, $_total";
+$stmt = $this->conn->prepare($query);
+
+$result = $stmt->execute();
+
+$product = $stmt->fetchAll();
+
+return $product;
+
 }
 
 public function Store(){
@@ -111,7 +124,7 @@ public function Store(){
     header("location:index.php");
 
 }
-public function Update(){
+public function Update($data){
 
     
 //echo $_SERVER['DOCUMTENT_ROOT'].'/crud/';
@@ -125,19 +138,19 @@ $_picture = $this->Upload();
 
 
 
-$_id = $_POST['id'];
-$_title = $_POST['title'];
-$_des = $_POST['description'];
-$_type = $_POST['product_type'];
-if(array_key_exists('is_active',$_POST)){
-    $_is_active = $_POST['is_active'];
+$id = $data['id'];
+$_title = $data['title'];
+$_des = $data['description'];
+$_type = $data['product_type'];
+if(array_key_exists('is_active',$data)){
+    $_is_active =$data['is_active'];
 
 }
 else{
     $_is_active = 0;
 }
-if(array_key_exists('is_deleted',$_POST)){
-    $_is_deleted = $_POST['is_deleted'];
+if(array_key_exists('is_deleted',$data)){
+    $_is_deleted = $data['is_deleted'];
 
 }
 else{
@@ -151,7 +164,7 @@ $_modified_at = date('Y-m-d h:i:s', time());
 $query = "UPDATE `product` SET `title` = :title,`description`= :description,`modified_at`=:modified_at,`is_deleted`=:is_deleted,`picture` = :picture,`product_type`=:product_type,`is_active` = :is_active WHERE `product`.`id` = :id;";
 
 $stmt = $this->conn->prepare($query);
-$stmt->bindParam(':id', $_id);
+$stmt->bindParam(':id', $id);
 $stmt->bindParam(':title', $_title);
 $stmt->bindParam(':description', $_des);
 $stmt->bindParam('modified_at', $_modified_at);
@@ -170,8 +183,8 @@ if ($result){
 //var_dump($result);
 header("location:index.php");
 }
-public function Edit(){
-    $_id = $_GET['id'];
+public function Edit($id){
+    
 
 
 //Connect to database
@@ -181,7 +194,7 @@ $query = "SELECT * FROM `product` WHERE id = :id";
 
 $stmt = $this->conn->prepare($query);
 
-$stmt->bindParam(':id', $_id);
+$stmt->bindParam(':id', $id);
 
 $result = $stmt->execute();
 
@@ -203,9 +216,9 @@ public function Trash_index(){
     $products = $stmt->fetchAll();
     return $products;
 }
-public function Trash(){
+public function Trash($id){
     
-$_id = $_GET['id'];
+
 $_is_deleted =1;
 
 
@@ -216,7 +229,7 @@ $query = "UPDATE `product` SET `is_deleted`=:is_deleted WHERE `product`.`id` = :
 
 $stmt = $this->conn->prepare($query);
 
-$stmt->bindParam(':id', $_id);
+$stmt->bindParam(':id', $id);
 $stmt->bindParam(':is_deleted', $_is_deleted);
 $result = $stmt->execute();
 if ($result){
@@ -227,9 +240,9 @@ if ($result){
 //var_dump($result);
 header("location:index.php");
 }
-    public function Delete(){
+    public function Delete($id){
         
-$_id = $_GET['id'];
+
 
 
 //Connect to database
@@ -239,7 +252,7 @@ $query = "DELETE FROM `product` WHERE `product`.`id` = :id";
 
 $stmt = $this->conn->prepare($query);
 
-$stmt->bindParam(':id', $_id);
+$stmt->bindParam(':id', $id);
 
 $result = $stmt->execute();
 if ($result){
@@ -250,10 +263,10 @@ if ($result){
 //var_dump($result);
 header("location:index.php");
     }
-    public function Restore(){
+    public function Restore($id){
 
         
-$_id = $_GET['id'];
+
 $_is_deleted =0;
 
 
@@ -264,7 +277,7 @@ $query = "UPDATE `product` SET `is_deleted`=:is_deleted WHERE `product`.`id` = :
 
 $stmt = $this->conn->prepare($query);
 
-$stmt->bindParam(':id', $_id);
+$stmt->bindParam(':id', $id);
 $stmt->bindParam(':is_deleted', $_is_deleted);
 $result = $stmt->execute();
 if ($result){
@@ -291,7 +304,7 @@ private function Upload(){
         if($is_file_moved){
             $_picture = $filename;
     
-    
+        }
         }else {
             if ($_POST['old_picture']){
                 $_picture = $_POST['old_picture'];
@@ -299,8 +312,9 @@ private function Upload(){
     
         }
     }
- return $_picture;
-  
-}
+    return $_picture;
+ 
+
+
 }
 }

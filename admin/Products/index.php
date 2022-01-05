@@ -29,7 +29,7 @@ echo "</pre>";*/
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-<div class="fa-a text-sucess">
+<div class="fs-4 text-sucess">
 <?php
 echo $_SESSION['message'];
 $_SESSION['message']="";
