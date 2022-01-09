@@ -2,9 +2,9 @@
 
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
 //include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/authentication.php");
-use Bitm\Product;
-$_product = new Product();
-$products= $_product->index();
+use Bitm\Register;
+$_user = new Register();
+$users= $_user->index();
 /*echo "<pre>";
 print_r($products);
 echo "</pre>";*/
@@ -40,11 +40,9 @@ $_SESSION['message']="";
                     <h1 class="text-center mb-4">List</h1>
                     <ul class="nav justify-content-center fs-3">
                         <li class="nav-item">
-                            <a class="nav-link" href="create.php">Add an Item</a>
+                            <a class="nav-link" href="create.php">Add an user</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="trash_index.php">All Trash Item</a>
-                        </li>
+                        
                     </ul>
                     <table class="table">
                         <thead>
@@ -56,13 +54,13 @@ $_SESSION['message']="";
                         </thead>
                         <tbody>
                             <?php
-                            if (count($products) > 0) :
-                                foreach ($products as $product) :
+                            if (count($users) > 0) :
+                                foreach ($users as $user) :
                             ?>
                                     <tr>
-                                        <td><?= $product['title']; ?></td>
-                                        <td><?= $product['is_active']? 'Active': 'Deactvated'; ?></td>
-                                        <td><a href="show.php?id=<?= $product['id']; ?>"><button class="btn btn-dark">Show</button></a> | <a href="edit.php?id=<?= $product['id']; ?>">Edit</a> | <a href="trash.php?id=<?= $product['id']; ?>">Trash</a></td>
+                                        <td><?= $user['username']; ?></td>
+                                        
+                                        <td><a href="show.php?id=<?= $user['id']; ?>"><button class="btn btn-dark">Show</button></a> | <a href="edit.php?id=<?= $user['id']; ?>">Edit</a> | <a href="trash.php?id=<?= $product['id']; ?>">Trash</a></td>
                                     </tr>
                                 <?php
                                 endforeach;

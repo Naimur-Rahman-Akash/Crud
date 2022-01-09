@@ -1,9 +1,7 @@
 <?php
 
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
-
-use Bitm\Banner;
-
+use Bitm\Register;
 $data = $_POST;
 function is_empty ($value)
 {
@@ -13,13 +11,12 @@ function is_empty ($value)
    return false; 
 }
 }
-if (is_empty($data['title'])){
+if (is_empty($data['username'])){
     session_start();
-    echo $_SESSION['message'] = "Title cant be empty";
-    header('location:create.php');
+    echo $_SESSION['message'] = "Username  cant be empty";
+    header("location:show.php");
 }
 else {
-$_banner = new Banner();
-$_banner->Store($data);
+$_user = new Register();
+$_user->Store($data);
 }
-

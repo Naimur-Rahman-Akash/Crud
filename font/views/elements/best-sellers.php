@@ -1,8 +1,9 @@
-
 <?php
+
 use Bitm\Product;
+
 $_product = new Product();
-$products= $_product->getActiveProduct();
+$products = $_product->getActiveProduct();
 
 ?>
 
@@ -17,35 +18,35 @@ $products= $_product->getActiveProduct();
         </div>
 
         <div class="row row-cols-1 row-cols-md-4 g-4 text-center">
-        <?php
-               $_active = 'active';
-               foreach($products as $product):
-               ?>
-            <div class="col">
-            
-                <div class="card <?=$_active;?>">
-                    <a href="product-detail.html"><img src="<?=$webroot;?>uploads/<?=$product['picture'];?>" class="card-img-top" alt="BEST SELLERS Image" title="Grandpa Rocking Chair"></a>
-                    <div class="card-body">
-                        <h5 class="card-title" title="Grandpa Rocking Chair"> <a href="product-detail.html">Grandpa Rocking Chair</a></h5>
-                       
-                        <p class="card-text"><i class="fas fa-star  fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i></p>
-                        <p>&dollar;100</p>
-                        <p><button type="button" class="btn btn-danger">Add to cart</button></p>
-                        
-                    </div>
-                    
-                  
-         
-           
-                </div>
-               
-            </div>
             <?php
-                        $_active = '';
-                     endforeach;
-                    ?>
-            </div>
-           
+
+            foreach ($products as $product) :
+            ?>
+                <div class="col">
+
+                    <div class="card ">
+                        <a href="product_detail.php?id=<?=$product['id'];?>"><img src="<?= $webroot; ?>uploads/<?= $product['picture']; ?>" class="card-img-top" alt="BEST SELLERS Image" title="Grandpa Rocking Chair"></a>
+                        <div class="card-body">
+                            <h5 class="card-title" title="Grandpa Rocking Chair"> <a href="product-detail.php"><?= $product['title']; ?></a></h5>
+
+                            <p class="card-text"><i class="fas fa-star  fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i> <i class="fas fa-star fa-xs"></i></p>
+                            <p>&dollar;100</p>
+                            <p><button type="button" class="btn btn-danger">Add to cart</button></p>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            <?php
+
+            endforeach;
+            ?>
         </div>
-    
+
+    </div>
+
 </section>

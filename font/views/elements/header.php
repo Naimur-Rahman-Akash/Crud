@@ -1,6 +1,6 @@
 <header>
     <div class="header-container">
-        <!-- <div class="header-top">
+        <div class="header-top">
             <div class="container">
                 <div class="d-none d-sm-none d-md-block">
                     <div class="row">
@@ -52,9 +52,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">
+                                    <a class="nav-link" href="sin_up.php">
                                         <i class="fas fa-comments"></i>
-                                        BLOG
+                                        SIGN UP
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -131,7 +131,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="container">
             <div class="d-none d-sm-none d-md-block">
                 <div class="row">
@@ -156,8 +156,8 @@
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                         <span class="input-group-text" id="basic-addon2">
-                                        <i class="fas fa-search"></i>
-                                    </span>
+                                            <i class="fas fa-search"></i>
+                                        </span>
                                     </div>
                                 </a>
                             </li>

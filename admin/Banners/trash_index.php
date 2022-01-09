@@ -1,10 +1,8 @@
 <?php
-
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
-//include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/authentication.php");
-use Bitm\Product;
-$_product = new Product();
-$products= $_product->index();
+use Bitm\Banner;
+$_banner = new Banner();
+$banners= $_Banner->Trash_index();
 /*echo "<pre>";
 print_r($products);
 echo "</pre>";*/
@@ -29,21 +27,21 @@ echo "</pre>";*/
     <section>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6">
-<div class="fs-4 text-sucess">
+                <div class="col-md-5">
+<div class="fa-a text-sucess">
 <?php
 echo $_SESSION['message'];
 $_SESSION['message']="";
 
 ?>
 </div>
-                    <h1 class="text-center mb-4">List</h1>
+                    <h1 class="text-center mb-4">Att Trash Items</h1>
                     <ul class="nav justify-content-center fs-3">
                         <li class="nav-item">
-                            <a class="nav-link" href="create.php">Add an Item</a>
+                            <a class="nav-link" href="">Trash Item</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="trash_index.php">All Trash Item</a>
+                            <a class="nav-link" href="index.php">List Items</a>
                         </li>
                     </ul>
                     <table class="table">
@@ -62,14 +60,14 @@ $_SESSION['message']="";
                                     <tr>
                                         <td><?= $product['title']; ?></td>
                                         <td><?= $product['is_active']? 'Active': 'Deactvated'; ?></td>
-                                        <td><a href="show.php?id=<?= $product['id']; ?>"><button class="btn btn-dark">Show</button></a> | <a href="edit.php?id=<?= $product['id']; ?>">Edit</a> | <a href="trash.php?id=<?= $product['id']; ?>">Trash</a></td>
+                                        <td> <a href="delete.php?id=<?= $product['id']; ?>" onclick="return confirm('are you sure you want to delete')">Delete</a> |<a href="restore.php?id=<?= $product['id']; ?>">Restore</a></td>
                                     </tr>
                                 <?php
                                 endforeach;
                             else :
                                 ?>
                                 <tr>
-                                    <td colspan="2">No product is available<a href="create.php">click here to add one.</a></td>
+                                    <td colspan="2"><strong>No product is available</strong></td>
 
                                 </tr>
                             <?php

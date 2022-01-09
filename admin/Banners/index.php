@@ -42,7 +42,7 @@ $_SESSION['message']="";
                             <a class="nav-link" href="create.php">Add an Item</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="trash_index.php">All Trash Item</a>
                         </li>
                     </ul>
                     <table class="table">

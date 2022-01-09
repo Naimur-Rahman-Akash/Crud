@@ -1,9 +1,12 @@
 <?php
 $webroot ="http://localhost/crud/";
 
+include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
+$id = $_GET['id'];
+echo $id;
 use Bitm\Banner;
 $_banner = new Banner();
-$banner= $_banner->Edit();
+$banner = $_banner->Edit($id);
 
 
 ?>

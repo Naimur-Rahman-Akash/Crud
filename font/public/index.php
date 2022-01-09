@@ -1,5 +1,5 @@
 <?php
-include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/crud/config.php");
 
 ?>
 <!doctype html>
@@ -7,14 +7,17 @@ include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
 <?php
 include_once('../views/elements/head.php');
 ?>
+
 <body>
-<?php
+    <?php
     include_once('../views/elements/header.php');
     include_once('../views/elements/carousel.php');
     include_once('../views/elements/best-sellers.php');
     include_once('../views/elements/special-products.php');
     include_once('../views/elements/script.php');
     
+
     ?>
 </body>
+
 </html>
