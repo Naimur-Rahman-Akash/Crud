@@ -1,6 +1,6 @@
 <?php
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
-use Bitm\Product;
+use Naimur\Product;
 
 $data = $_POST;
 function is_empty($value){

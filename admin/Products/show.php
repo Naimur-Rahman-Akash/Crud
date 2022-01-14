@@ -2,7 +2,7 @@
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
 include_once ($approot. "vendor/autoload.php");
 
-use Bitm\Product;
+use Naimur\Product;
 $id = $_GET['id'];
 $_show = new Product();
 $product = $_show->Show($id);
@@ -36,6 +36,10 @@ $product = $_show->Show($id);
                 <dl class="row">
                     <dt class="col-md-3">Title:</dt>
                     <dd class="col-md-9"><?=$product['title'];?></dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-md-3">Price:</dt>
+                    <dd class="col-md-9"><?=$product['price'];?></dd>
                 </dl>
                 <dl class="row">
                     <dt class="col-md-3">Description:</dt>

@@ -3,7 +3,7 @@ $webroot ="http://localhost/crud/";
 
 
 include_once ($_SERVER['DOCUMENT_ROOT']. "/crud/config.php");
-use Bitm\Product;
+use Naimur\Product;
 $id = $_GET['id'];
 
 $_product = new Product();
@@ -59,6 +59,17 @@ $_SESSION['message']="";
                                 id="inputTitle"
                                 name="title"
                                 value="<?=$product['title'];?>">
+                        </div>
+                        </div>
+                        <div class="mb-2 row">
+                        <label for="inputPrice" class="col-md-3 col-form-label">price:</label>
+                        <div class="col-md-10">
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="inputPirce"
+                                name="price"
+                                value="<?=$product['price'];?>">
                         </div>
                         </div>
                         <div class="mb-2 row">

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bitm;
+namespace Naimur;
 
 use PDO;
 
@@ -59,6 +59,19 @@ class Product
     public function getActiveProduct()
     {
         $_startFrom = 0;
+        $_total = 8;
+        $query = "SELECT * FROM `Product` WHERE is_active = 1 LIMIT $_startFrom, $_total";
+        $stmt = $this->conn->prepare($query);
+
+        $result = $stmt->execute();
+
+        $product = $stmt->fetchAll();
+
+        return $product;
+    }
+    public function getActiveProduct2()
+    {
+        $_startFrom = 0;
         $_total = 4;
         $query = "SELECT * FROM `Product` WHERE is_active = 1 LIMIT $_startFrom, $_total";
         $stmt = $this->conn->prepare($query);
@@ -69,7 +82,19 @@ class Product
 
         return $product;
     }
+    public function getActiveProductShop()
+    {
+        $_startFrom = 0;
+        $_total = 12;
+        $query = "SELECT * FROM `Product` WHERE is_active = 1 LIMIT $_startFrom, $_total";
+        $stmt = $this->conn->prepare($query);
 
+        $result = $stmt->execute();
+
+        $product = $stmt->fetchAll();
+
+        return $product;
+    }
     public function Store()
     {
 
@@ -77,6 +102,7 @@ class Product
         $_picture = $this->Upload();
 
         $_title = $_POST['title'];
+        $_price = $_POST['price'];
         $_des = $_POST['description'];
         $_type = $_POST['product_type'];
 
@@ -103,10 +129,11 @@ class Product
         //Connect to database
 
 
-        $query = "INSERT INTO `product` (`title`,`description`,`created_at`,`is_deleted`,`picture`,`product_type`,`is_active`) VALUES (:title,:description, :created_at,:is_deleted,:picture,:product_type,:is_active);";
+        $query = "INSERT INTO `product` (`title`,`price`,`description`,`created_at`,`is_deleted`,`picture`,`product_type`,`is_active`) VALUES (:title,:price,:description, :created_at,:is_deleted,:picture,:product_type,:is_active);";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':title', $_title);
+        $stmt->bindParam(':price', $_price);
         $stmt->bindParam(':description', $_des);
         $stmt->bindParam(':picture', $_picture);
         $stmt->bindParam(':created_at', $_created_at);
@@ -140,6 +167,7 @@ echo "</pre>";*/
 
 
         $id = $data['id'];
+        $_price = $_POST['price'];
         $_title = $data['title'];
         $_des = $data['description'];
         $_type = $data['product_type'];
@@ -158,11 +186,12 @@ echo "</pre>";*/
         //Connect to database
 
 
-        $query = "UPDATE `product` SET `title` = :title,`description`= :description,`modified_at`=:modified_at,`is_deleted`=:is_deleted,`picture` = :picture,`product_type`=:product_type,`is_active` = :is_active WHERE `product`.`id` = :id;";
+        $query = "UPDATE `product` SET `title` = :title,`price` = :price,`description`= :description,`modified_at`=:modified_at,`is_deleted`=:is_deleted,`picture` = :picture,`product_type`=:product_type,`is_active` = :is_active WHERE `product`.`id` = :id;";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':title', $_title);
+        $stmt->bindParam(':price', $_price);
         $stmt->bindParam(':description', $_des);
         $stmt->bindParam('modified_at', $_modified_at);
         $stmt->bindParam('is_deleted', $_is_deleted);

@@ -1,34 +1,58 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
--->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-
-<script>
-    var myCarousel = document.querySelector('#myCarousel')
-    var carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 1400,
-        wrap: true
-    })
-
-    //countdown timer
-    $(".box-timer")
-  .countdown("2022/01/01", function(event) {
-    $('.day .number').text(
-      event.strftime('%D ')
-    );
-    $('.hour .number').text(
-      event.strftime(' %H')
-    );
-    $('.min .number').text(
-      event.strftime(' %M')
-    );
-    $('.sec .number').text(
-      event.strftime('%S')
-    );
-  });
-</script>
+      <script src="http://localhost/crud/font/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="http://localhost/crud/font/public/vendor/glightbox/js/glightbox.min.js"></script>
+      <script src="http://localhost/crud/font/public/vendor/nouislider/nouislider.min.js"></script>
+      <script src="http://localhost/crud/font/public/vendor/swiper/swiper-bundle.min.js"></script>
+      <script src="http://localhost/crud/font/public/vendor/choices.js">
+      </script>
+      <script src="http://localhost/crud/font/public/js/front.js"></script>
+      <script>
+        // ------------------------------------------------------- //
+        //   Inject SVG Sprite - 
+        //   see more here 
+        //   https://css-tricks.com/ajaxing-svg-sprite/
+        // ------------------------------------------------------ //
+        function injectSvgSprite(path) {
+        
+            var ajax = new XMLHttpRequest();
+            ajax.open("GET", path, true);
+            ajax.send();
+            ajax.onload = function(e) {
+            var div = document.createElement("div");
+            div.className = 'd-none';
+            div.innerHTML = ajax.responseText;
+            document.body.insertBefore(div, document.body.childNodes[0]);
+            }
+        }
+        // this is set to BootstrapTemple website as you cannot 
+        // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
+        // while using file:// protocol
+        // pls don't forget to change to your domain :)
+        injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
+        
+      </script>
+      <script>
+        var range = document.getElementById('range');
+        noUiSlider.create(range, {
+            range: {
+                'min': 0,
+                'max': 2000
+            },
+            step: 5,
+            start: [100, 1000],
+            margin: 300,
+            connect: true,
+            direction: 'ltr',
+            orientation: 'horizontal',
+            behaviour: 'tap-drag',
+            tooltips: true,
+            format: {
+              to: function ( value ) {
+                return '$' + value;
+              },
+              from: function ( value ) {
+                return value.replace('', '');
+              }
+            }
+        });
+        
+      </script>
